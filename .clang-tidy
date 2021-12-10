@@ -1,0 +1,30 @@
+Checks: '-*,
+bugprone-*,
+performance-*,
+misc-*,
+cppcoreguidelines-avoid-non-const-global-variables,
+cppcoreguidelines-avoid-goto,
+readability-qualified-auto,
+readability-identifier-naming,
+readability-make-member-function-const,
+readability-const-return-type,
+readability-inconsistent-declaration-parameter-name'
+CheckOptions:
+  - { key: readability-identifier-naming.ClassCase,     value: lower_case  }
+  - { key: readability-identifier-naming.UnionCase,     value: lower_case  }
+  - { key: readability-identifier-naming.EnumCase,      value: lower_case  }
+  - { key: readability-identifier-naming.EnumConstantCase, value: lower_case  }
+  - { key: readability-identifier-naming.TypeAliasCase, value: lower_case  }
+  - { key: readability-identifier-naming.TemplateParameterCase, value: lower_case  }
+  - { key: readability-identifier-naming.TypeTemplateParameterCase, value: CamelCase  }
+  - { key: readability-identifier-naming.TemplateTemplateParameterCase, value: CamelCase  }
+  - { key: readability-identifier-naming.MemberCase,    value: lower_case }
+  - { key: readability-identifier-naming.MemberPrefix,  value: m_          }
+  - { key: readability-identifier-naming.NamespaceCase, value: lower_case }
+  - { key: readability-identifier-naming.VariableCase,  value: lower_case }
+  - { key: readability-identifier-naming.FunctionCase,  value: lower_case }
+  - { key: readability-identifier-naming.ParameterCase, value: lower_case }
+  - { key: performance-unnecessary-value-param.AllowedTypes, value: '[Rr]ef(erence)?$;Ptr$;ptr$'}
+  - { key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic, value: 1}
+
+  

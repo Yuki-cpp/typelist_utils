@@ -1,0 +1,13 @@
+
+*.pyc
+.vscode/
+.cache/
+build/
+compile_commands.json
+test_package/build
+test_package/cmake-build-release
+**/conan.lock
+**/conanbuildinfo.txt
+**/graph_info.json
+**/conaninfo.txt
+*.code-workspace
