@@ -11,7 +11,10 @@ namespace tl
 namespace sort_impl
 {
 template <tl::concepts::tuple T>
-using split_half_t = split_t<T, std::tuple_size_v<T> / 2>;
+using split_half_l_t = split_l_t<T, std::tuple_size_v<T> / 2>;
+
+template <tl::concepts::tuple T>
+using split_half_r_t = split_r_t<T, std::tuple_size_v<T> / 2>;
 
 template <tl::concepts::tuple A,
           tl::concepts::tuple B,
@@ -77,9 +80,8 @@ template <typename T, typename... Ts, template <typename, typename> typename Pre
 struct sort<std::tuple<T, Ts...>, Predicate>
 {
     using input_t = std::tuple<T, Ts...>;
-    using subdivided_t = tl::sort_impl::split_half_t<input_t>;
-    using left_sort_t = typename sort<typename subdivided_t::l, Predicate>::type;
-    using right_sort_t = typename sort<typename subdivided_t::r, Predicate>::type;
+    using left_sort_t = typename sort<tl::sort_impl::split_half_l_t<input_t>, Predicate>::type;
+    using right_sort_t = typename sort<tl::sort_impl::split_half_r_t<input_t>, Predicate>::type;
 
     using type = tl::sort_impl::merge_t<left_sort_t, right_sort_t, Predicate>;
 };

@@ -40,6 +40,16 @@ constexpr auto count_v = count<T, E>::value;
 template <tl::concepts::tuple T, typename E>
 constexpr auto contains_v = 0 < count_v<T, E>;
 
+template <tl::concepts::tuple T, typename... Es>
+struct contains_all
+{
+    static constexpr auto value =
+        (static_cast<std::size_t>(contains_v<T, Es>) + ... + 0) == sizeof...(Es);
+};
+
+template <tl::concepts::tuple T, typename... Es>
+constexpr auto contains_all_v = contains_all<T, Es...>::value;
+
 template <tl::concepts::tuple T, tl::concepts::tuple U>
 struct concat;
 template <typename... Ts, typename... Us>
@@ -67,17 +77,30 @@ struct split
 
 template <tl::concepts::tuple T, std::size_t split_index>
     requires(split_index <= std::tuple_size_v<T>)
-using split_t = typename split<T, split_index>::type;
+using split_r_t = typename split<T, split_index>::r;
 
-template <tl::concepts::tuple T, typename... Es>
-struct contains_all
+template <tl::concepts::tuple T, std::size_t split_index>
+    requires(split_index <= std::tuple_size_v<T>)
+using split_l_t = typename split<T, split_index>::l;
+
+template <tl::concepts::tuple T, template <typename> typename F>
+struct for_each;
+
+template <template <typename> typename F>
+struct for_each<std::tuple<>, F>
 {
-    static constexpr auto value =
-        (static_cast<std::size_t>(contains_v<T, Es>) + ...) == sizeof...(Es);
+    using type = std::tuple<>;
 };
 
-template <tl::concepts::tuple T, typename... Es>
-constexpr auto contains_all_v = contains_all<T, Es...>::value;
+template <typename T, typename... Ts, template <typename> typename F>
+    requires tl::concepts::unary_type_predicate<F, T>
+struct for_each<std::tuple<T, Ts...>, F>
+{
+    using type = tl::concat_t<std::tuple<typename F<T>::type>, std::tuple<typename F<Ts>::type...>>;
+};
+
+template <tl::concepts::tuple T, template <typename> typename F>
+using for_each_t = typename for_each<T, F>::type;
 
 template <tl::concepts::tuple T, std::size_t first, std::size_t second>
     requires requires
@@ -122,24 +145,5 @@ struct swap_elements
 
 template <tl::concepts::tuple T, std::size_t first, std::size_t second>
 using swap_elements_t = typename swap_elements<T, first, second>::type;
-
-template <tl::concepts::tuple T, template <typename> typename F>
-struct for_each;
-
-template <template <typename> typename F>
-struct for_each<std::tuple<>, F>
-{
-    using type = std::tuple<>;
-};
-
-template <typename T, typename... Ts, template <typename> typename F>
-    requires tl::concepts::unary_type_predicate<F, T>
-struct for_each<std::tuple<T, Ts...>, F>
-{
-    using type = std::tuple<typename F<Ts>::type...>;
-};
-
-template <tl::concepts::tuple T, template <typename> typename F>
-using for_each_t = typename for_each<T, F>::type;
 
 }  // namespace tl
