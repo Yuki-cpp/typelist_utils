@@ -35,8 +35,6 @@ jobs:
           conan remote add yukicpp https://yukicpp.jfrog.io/artifactory/api/conan/conan-yuki
           conan user -p ${{ secrets.ARTIFACTORY_KEY }} -r yukicpp yuki-bot
 
-
-      ${{github.event.action}}
       - name: Upload to Artifactory
         if: ${{ env.GITHUB_EVENT_NAME == 'push' }}
         run: |
