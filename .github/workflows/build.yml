@@ -15,9 +15,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install CMake
-        uses: lukka/get-cmake@latest
-
       - name: Install Clang
         uses: egor-tensin/setup-clang@v1
         with:
@@ -29,6 +26,11 @@ jobs:
         id: conan
         uses: turtlebrowser/get-conan@main
 
+      - name: Setup Conan
+        run: |
+          conan remote add yukicpp https://yukicpp.jfrog.io/artifactory/api/conan/conan-yuki
+          conan user -p ${{ secrets.ARTIFACTORY_KEY }} -r yukicpp yuki-bot
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
@@ -36,4 +38,5 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          conan install $GITHUB_WORKSPACE --profile $GITHUB_WORKSPACE/conan/clang_profile
+          conan create $GITHUB_WORKSPACE yuki/devel -pr:h $GITHUB_WORKSPACE/conan/clang_profile -pr:b $GITHUB_WORKSPACE/conan/clang_profile
+          conan upload "*" -r=yukicpp --all -c --skip-upload
