@@ -1,4 +1,4 @@
-name: CI
+name: Build and Test
 on:
   push:
     branches: [ master ]
@@ -30,16 +30,15 @@ jobs:
         run: |
           conan create $GITHUB_WORKSPACE yuki/devel -pr:h $GITHUB_WORKSPACE/conan/clang_profile -pr:b $GITHUB_WORKSPACE/conan/clang_profile
 
-  Deploy:
-    runs-on: ubuntu-latest
-    needs: Build
-
-    steps:
       - name: Setup Conan user
         run: |
           conan remote add yukicpp https://yukicpp.jfrog.io/artifactory/api/conan/conan-yuki
           conan user -p ${{ secrets.ARTIFACTORY_KEY }} -r yukicpp yuki-bot
 
+
+      ${{github.event.action}}
       - name: Upload to Artifactory
+        if: ${{ env.GITHUB_EVENT_NAME == 'push' }}
         run: |
-          conan upload "*" -r=yukicpp --all -c --skip-upload
+          echo HERE
+          # conan upload "*@yuki/devel" -r=yukicpp --all -c --skip-upload
