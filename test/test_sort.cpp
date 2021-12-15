@@ -23,15 +23,35 @@ struct is_greater_than
 
 TEST_CASE("tl::sort works", "[tl::sort]")
 {
-    SECTION("Check sorting predicates")
+    SECTION("Test utilities")
     {
-        REQUIRE(is_lesser_than<a, a>::value == false);
-        REQUIRE(is_lesser_than<a, b>::value == true);
-        REQUIRE(is_lesser_than<b, a>::value == false);
+        SECTION("Check sorting predicates")
+        {
+            REQUIRE(is_lesser_than<a, a>::value == false);
+            REQUIRE(is_lesser_than<a, b>::value == true);
+            REQUIRE(is_lesser_than<b, a>::value == false);
 
-        REQUIRE(is_greater_than<a, a>::value == false);
-        REQUIRE(is_greater_than<a, b>::value == false);
-        REQUIRE(is_greater_than<b, a>::value == true);
+            REQUIRE(is_greater_than<a, a>::value == false);
+            REQUIRE(is_greater_than<a, b>::value == false);
+            REQUIRE(is_greater_than<b, a>::value == true);
+        }
+
+        SECTION("Check that splitting function works")
+        {
+            using t = std::tuple<a, b, c, d>;
+            using l = tl::sort_impl::split_half_l_t<t>;
+            using r = tl::sort_impl::split_half_r_t<t>;
+
+            REQUIRE(std::is_same_v<l, std::tuple<a, b>>);
+            REQUIRE(std::is_same_v<r, std::tuple<c, d>>);
+
+            using t2 = std::tuple<a, b, c, d, e>;
+            using l2 = tl::sort_impl::split_half_l_t<t2>;
+            using r2 = tl::sort_impl::split_half_r_t<t2>;
+
+            REQUIRE(std::is_same_v<l2, std::tuple<a, b>>);
+            REQUIRE(std::is_same_v<r2, std::tuple<c, d, e>>);
+        }
     }
 
     SECTION("Empty tuples")
@@ -43,23 +63,6 @@ TEST_CASE("tl::sort works", "[tl::sort]")
 
         REQUIRE(std::is_same_v<empty, sorted_lesser>);
         REQUIRE(std::is_same_v<empty, sorted_greater>);
-    }
-
-    SECTION("Check that splitting function works")
-    {
-        using t = std::tuple<a, b, c, d>;
-        using l = tl::sort_impl::split_half_l_t<t>;
-        using r = tl::sort_impl::split_half_r_t<t>;
-
-        REQUIRE(std::is_same_v<l, std::tuple<a, b>>);
-        REQUIRE(std::is_same_v<r, std::tuple<c, d>>);
-
-        using t2 = std::tuple<a, b, c, d, e>;
-        using l2 = tl::sort_impl::split_half_l_t<t2>;
-        using r2 = tl::sort_impl::split_half_r_t<t2>;
-
-        REQUIRE(std::is_same_v<l2, std::tuple<a, b>>);
-        REQUIRE(std::is_same_v<r2, std::tuple<c, d, e>>);
     }
 
     SECTION("Sorted in Ascending order")
