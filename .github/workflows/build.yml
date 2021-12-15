@@ -29,8 +29,10 @@ jobs:
       - name: Setup Conan
         run: |
           c++ --version
-      #     conan remote add yukicpp https://yukicpp.jfrog.io/artifactory/api/conan/conan-yuki
-      #     conan user -p ${{ secrets.ARTIFACTORY_KEY }} -r yukicpp yuki-bot
+          echo $GITHUB_WORKSPACE
+          conan profile show $GITHUB_WORKSPACE/conan/clang_profile
+          conan remote add yukicpp https://yukicpp.jfrog.io/artifactory/api/conan/conan-yuki
+          conan user -p ${{ secrets.ARTIFACTORY_KEY }} -r yukicpp yuki-bot
 
 
       # # Runs a set of commands using the runners shell
