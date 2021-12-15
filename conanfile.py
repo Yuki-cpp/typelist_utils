@@ -12,7 +12,7 @@ class TypelistUtilsConan(ConanFile):
     description = "Small header only library allowing to manipulate tuples as type lists"
     topics = ("C++20", "type list")
 
-    exports_sources = "conan/*", "include/*", "CMakeLists.txt", "src/*"
+    exports_sources = "conan/*", "include/*", "CMakeLists.txt", "test/*"
     no_copy_source = True
     generators = "cmake"
 

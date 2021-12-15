@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(conan/import_conan.cmake)
 
-add_executable(typelist_utils src/main.cpp)
+add_executable(typelist_utils test/main.cpp test/test_utils.cpp test/test_sort.cpp)
 target_include_directories(typelist_utils PRIVATE include ${CONAN_INCLUDE_DIRS})
 
 enable_testing()

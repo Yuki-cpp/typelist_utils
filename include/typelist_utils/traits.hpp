@@ -30,7 +30,7 @@ concept binary_value_predicate = requires
 {
     {
         P<T, U>::value
-        } -> same_as<bool>;
+        } -> same_as<const bool&>;
 };
 
 template <template <typename> typename P, typename T>
@@ -38,7 +38,7 @@ concept unary_value_predicate = requires
 {
     {
         P<T>::value
-        } -> same_as<bool>;
+        } -> same_as<const bool&>;
 };
 
 template <template <typename, typename> typename P, typename T, typename U>

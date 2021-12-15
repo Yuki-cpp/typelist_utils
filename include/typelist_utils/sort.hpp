@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tuple>
+#include <type_traits>
 
 #include "traits.hpp"
 #include "utils.hpp"
@@ -28,10 +29,10 @@ struct merge<std::tuple<>, B, Predicate>
     using type = B;
 };
 
-template <tl::concepts::tuple A, template <typename, typename> typename Predicate>
-struct merge<A, std::tuple<>, Predicate>
+template <typename A, typename... As, template <typename, typename> typename Predicate>
+struct merge<std::tuple<A, As...>, std::tuple<>, Predicate>
 {
-    using type = A;
+    using type = std::tuple<A, As...>;
 };
 
 template <typename A,
@@ -45,11 +46,10 @@ struct merge<std::tuple<A, As...>, std::tuple<B, Bs...>, Predicate>
 {
     using list_a = std::tuple<A, As...>;
     using list_b = std::tuple<B, Bs...>;
-
     using type = std::conditional_t<
         Predicate<A, B>::value,
-        tl::concat<std::tuple<A>, typename merge<std::tuple<As...>, list_b, Predicate>::type>,
-        tl::concat<std::tuple<B>, typename merge<list_a, std::tuple<Bs...>, Predicate>::type>>;
+        tl::concat_t<std::tuple<A>, typename merge<std::tuple<As...>, list_b, Predicate>::type>,
+        tl::concat_t<std::tuple<B>, typename merge<list_a, std::tuple<Bs...>, Predicate>::type>>;
 };
 
 template <tl::concepts::tuple A,

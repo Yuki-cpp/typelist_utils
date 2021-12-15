@@ -1,6 +1,3 @@
-#define CATCH_CONFIG_MAIN
-
-#include <iostream>
 #include <tuple>
 
 #include <catch2/catch.hpp>
