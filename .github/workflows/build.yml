@@ -35,8 +35,8 @@ jobs:
           conan user -p ${{ secrets.ARTIFACTORY_KEY }} -r yukicpp yuki-bot
 
 
-      # # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #   run: |
-      #     conan create $GITHUB_WORKSPACE yuki/devel -pr:h $GITHUB_WORKSPACE/conan/clang_profile -pr:b $GITHUB_WORKSPACE/conan/clang_profile
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          conan create $GITHUB_WORKSPACE yuki/devel -pr:h $GITHUB_WORKSPACE/conan/clang_profile -pr:b $GITHUB_WORKSPACE/conan/clang_profile
       #     conan upload "*" -r=yukicpp --all -c --skip-upload
