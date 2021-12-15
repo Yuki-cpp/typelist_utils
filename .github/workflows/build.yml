@@ -38,5 +38,5 @@ jobs:
       - name: Upload to Artifactory
         if: github.event.pull_request.merged == true
         run: |
-          echo HERE
+          echo "Will update on artifactory when ready"
           # conan upload "*@yuki/devel" -r=yukicpp --all -c --skip-upload
