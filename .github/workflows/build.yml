@@ -36,12 +36,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          conan profile new clang
-          conan profile update settings.os=Linux
-          conan profile update settings.os_build=Linux
-          conan profile update settings.arch=x86_64
-          conan profile update settings.arch_build=x86_64
-          conan profile update settings.compiler=clang
-          conan profile update settings.compiler.version=13
-          conan profile update settings.compiler.libcxx=libstdc++11
-          conan profile update settings.build_type=Release
+          conan install $GITHUB_WORKSPACE --profile $GITHUB_WORKSPACE/conan/clang_profile
