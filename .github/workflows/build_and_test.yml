@@ -41,7 +41,7 @@ jobs:
           mkdir build
           cmake -S $GITHUB_WORKSPACE -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON
           sonar-build-wrapper --out-dir sonar_out cmake --build build/
-          tree sonar_out
+          ls -R sonar_out
           llvm-profdata-13 merge -sparse ./build/bin/default.profraw -o ./build/bin/default.profdata
           llvm-cov-13 show ./build/bin/typelist_utils -instr-profile=./build/bin/default.profdata > ./coverage.txt
 
