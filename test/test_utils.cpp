@@ -77,11 +77,6 @@ TEST_CASE("tl::contains_all works", "[tl::contains_all]")
     {
         using t = std::tuple<bool, float, float, int>;
 
-        using sub_1 = std::tuple<bool, float, int>;
-        using sub_2 = std::tuple<bool, double, int>;
-        using sub_3 = std::tuple<double, double, double>;
-        using sub_4 = std::tuple<>;
-
         REQUIRE(tl::contains_all_v<t, bool, float, int> == true);
         REQUIRE(tl::contains_all_v<t, bool, double, int> == false);
         REQUIRE(tl::contains_all_v<t, double, double, double> == false);
