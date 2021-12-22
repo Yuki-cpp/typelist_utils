@@ -39,8 +39,8 @@ jobs:
       - name: Build and test
         run: |
           mkdir build
-          cmake -S $GITHUB_WORKSPACE -B build
-          sonar-build-wrapper --out-dir sonar_out cmake --build build/ -DCMAKE_BUILD_TYPE=Release
+          cmake -S $GITHUB_WORKSPACE -B build -DCMAKE_BUILD_TYPE=Release
+          sonar-build-wrapper --out-dir sonar_out cmake --build build/
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
