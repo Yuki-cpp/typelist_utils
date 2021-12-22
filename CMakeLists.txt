@@ -11,6 +11,15 @@ add_executable(typelist_utils test/main.cpp test/test_utils.cpp test/test_sort.c
 target_include_directories(typelist_utils PRIVATE include ${CONAN_INCLUDE_DIRS})
 
 if(ENABLE_COVERAGE)
+  target_compile_options(
+    typelist_utils
+    PRIVATE
+      -fprofile-instr-generate
+      -fcoverage-mapping
+      -mllvm
+      -runtime-counter-relocation
+  )
+
   target_link_options(
     typelist_utils
     PRIVATE
