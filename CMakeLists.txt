@@ -10,6 +10,24 @@ include(conan/import_conan.cmake)
 add_executable(typelist_utils test/main.cpp test/test_utils.cpp test/test_sort.cpp)
 target_include_directories(typelist_utils PRIVATE include ${CONAN_INCLUDE_DIRS})
 
+if(ENABLE_COVERAGE)
+  target_link_options(
+    typelist_utils
+    PRIVATE
+    -fprofile-instr-generate
+    -fcoverage-mapping
+  )
+endif()
+
+target_compile_options(
+  typelist_utils
+  PRIVATE
+    -Wall
+    -Wextra
+    -pedantic
+    -Werror
+)
+
 enable_testing()
 add_test(
   NAME typelist_utils
