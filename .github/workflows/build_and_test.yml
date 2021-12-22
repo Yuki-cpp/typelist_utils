@@ -43,8 +43,8 @@ jobs:
           sonar-build-wrapper --out-dir sonar_out cmake --build build/
           ./build/bin/typelist_utils -r junit > ./test_results.xml
           ls -R .
-          llvm-profdata-13 merge -sparse ./build/bin/default.profraw -o ./build/bin/default.profdata
-          llvm-cov-13 show ./build/bin/typelist_utils -instr-profile=./build/bin/default.profdata > ./coverage.txt
+          llvm-profdata-13 merge -sparse ./default.profraw -o ./default.profdata
+          llvm-cov-13 show ./build/bin/typelist_utils -instr-profile=./default.profdata > ./coverage.txt
 
 
       - name: Run sonar-scanner
