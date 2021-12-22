@@ -36,7 +36,10 @@ target_compile_options(
     -pedantic
     -Werror
 )
-
+set(
+  CTEST_COVERAGE_COMMAND
+  "llvm-cov-13"
+)
 enable_testing()
 add_test(
   NAME typelist_utils

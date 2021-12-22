@@ -42,9 +42,8 @@ jobs:
           cmake -S $GITHUB_WORKSPACE -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON
           sonar-build-wrapper --out-dir sonar_out cmake --build build/
           ./build/bin/typelist_utils -r junit > ./test_results.xml
-          ls -R .
           llvm-profdata-13 merge -sparse ./default.profraw -o ./default.profdata
-          llvm-cov-13 show ./build/bin/typelist_utils -instr-profile=./default.profdata > ./coverage.txt
+          llvm-cov-13 show ./build/bin/typelist_utils -instr-profile=./default.profdata -output-dir=build/coverage
 
 
       - name: Run sonar-scanner
