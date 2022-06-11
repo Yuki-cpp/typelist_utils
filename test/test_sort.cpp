@@ -1,6 +1,6 @@
 #include <tuple>
 
-#include <catch2/catch.hpp>
+#include <catch.hpp>
 #include <typelist_utils/tl.hpp>
 
 using a = std::integral_constant<int, 0>;

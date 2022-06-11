@@ -5,10 +5,11 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(conan/import_conan.cmake)
+find_package(Catch2 REQUIRED)
 
 add_executable(typelist_utils test/main.cpp test/test_utils.cpp test/test_sort.cpp)
-target_include_directories(typelist_utils PRIVATE include ${CONAN_INCLUDE_DIRS})
+target_include_directories(typelist_utils PRIVATE include)
+target_link_libraries(typelist_utils PRIVATE Catch2::Catch2WithMain)
 
 if(ENABLE_COVERAGE)
   target_compile_options(
@@ -38,7 +39,7 @@ target_compile_options(
 )
 set(
   CTEST_COVERAGE_COMMAND
-  "llvm-cov-13"
+  "llvm-cov"
 )
 enable_testing()
 add_test(

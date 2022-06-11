@@ -1,6 +1,6 @@
 #include <tuple>
 
-#include <catch2/catch.hpp>
+#include <catch.hpp>
 #include <typelist_utils/tl.hpp>
 
 TEST_CASE("tl::start_with works", "[tl::start_with]")
