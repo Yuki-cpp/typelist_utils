@@ -23,6 +23,7 @@ jobs:
       
       - name: Build and test
         run: |
+          vcpkg integrate install
           mkdir build
           cmake -S $GITHUB_WORKSPACE -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCMAKE_TOOLCHAIN_FILE=$VCPKG_TOOLCHAIN
           sonar-build-wrapper --out-dir sonar_out cmake --build build/
