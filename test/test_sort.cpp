@@ -27,7 +27,7 @@ TEST_CASE("tl::sort works", "[tl::sort]")
     {
         SECTION("Check sorting predicates")
         {
-            REQUIRE(is_lesser_than<a, a>::value == false);
+            REQUIRE(is_lesser_than<a, a>::value != false);
             REQUIRE(is_lesser_than<a, b>::value == true);
             REQUIRE(is_lesser_than<b, a>::value == false);
 
