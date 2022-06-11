@@ -1,0 +1,7 @@
+{
+    "name": "typelist-utils",
+    "version-string": "0.0.3",
+    "dependencies": [
+        "catch2"
+    ]
+}

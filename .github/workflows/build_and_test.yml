@@ -18,28 +18,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Build and test
-        run: |
-          conan create $GITHUB_WORKSPACE yuki/devel -pr:h $GITHUB_WORKSPACE/conan/clang_profile -pr:b $GITHUB_WORKSPACE/conan/clang_profile
-
-  SonarCheck:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/yuki-cpp/ubuntu_20_04:clang-13
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    steps:
-      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       
       - name: Build and test
         run: |
           mkdir build
-          cmake -S $GITHUB_WORKSPACE -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON
+          cmake -S $GITHUB_WORKSPACE -B build -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=ON -DCMAKE_TOOLCHAIN_FILE=$VCPKG_TOOLCHAIN
           sonar-build-wrapper --out-dir sonar_out cmake --build build/
           ./build/bin/typelist_utils -r sonarqube > ./build/test_results.xml
           llvm-profdata-13 merge -sparse ./default.profraw -o ./default.profdata
